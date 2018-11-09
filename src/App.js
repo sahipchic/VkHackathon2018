@@ -1,5 +1,6 @@
 import React from 'react';
 import connect from '@vkontakte/vkui-connect';
+import {ReactMic} from 'react-mic';
 import {
     Button,
     ConfigProvider,
@@ -19,14 +20,11 @@ import {
 } from '@vkontakte/vkui';
 import {isWebView} from '@vkontakte/vkui/src/lib/webview';
 import '@vkontakte/vkui/dist/vkui.css';
-//import EpicClass from './Epic';
-//import AvailableTasks from './AvailableTasks';
 import $ from 'jquery';
 import Icon24Back from "@vkontakte/icons/dist/24/back";
 import Icon24Phone from "@vkontakte/icons/dist/24/phone";
 import Icon16Dropdown from "@vkontakte/icons/dist/16/pin";
-import testl from './styles.css'
-import testr from './styles.css'
+import {testl, testr, bblock, wrap} from './styles.css'
 
 class App extends React.Component {
     constructor(props) {
@@ -34,8 +32,10 @@ class App extends React.Component {
         this.state = {
             activeStory: 'feed',
             activeView: 'view1',
-            fetchedUser: null
+            fetchedUser: null,
+            record: false
         }
+
     }
 
     componentDidMount() {
@@ -106,7 +106,8 @@ class App extends React.Component {
                                     <Button level="outline" size="l">Джозеф, что новенького в мире?</Button>
                                 </Div>
                                 <Div className="testl">
-                                    <Button level="commerce" size="l">Да просто лютый пиздец происходит, братан!</Button>
+                                    <Button level="commerce" size="l">Да просто лютый пиздец происходит,
+                                        братан!</Button>
                                 </Div>
                                 <Div className="testr">
                                     <Button level="outline" size="l">Ну ок, а что по погоде?</Button>
@@ -140,9 +141,29 @@ class App extends React.Component {
                                     <Button level="outline" size="l">Спасибо большое, братан!</Button>
                                 </Div>
                             </List>
-                            <Footer>
-                                <Input type="text" placeholder="Задайте свой вопрос Джозефу" />
-                            </Footer>
+
+                            <div className='wrap'>
+                                <Div className="bblock">
+                                    <Input type="text" placeholder="Задайте свой вопрос Джозефу" />
+                                </Div>
+                                <Div className="bblock">
+                                    <Button level="outline" >?</Button>
+                                </Div>
+                            </div>
+                            <Div>
+                                <ReactMic
+                                    record={this.state.record}
+                                    className="sound-wave"
+                                    onStop={this.onStop}
+                                    onData={this.onData}
+                                    width='0'
+                                    height='0'
+                                    strokeColor="#000000"
+                                    backgroundColor="#FF4081"/>
+                                <button onClick={this.startRecording} type="button">Start</button>
+                                <button onClick={this.stopRecording} type="button">Stop</button>
+
+                            </Div>
                         </Panel>
                     </View>
 
@@ -151,6 +172,36 @@ class App extends React.Component {
             </ConfigProvider>
 
         )
+    }
+
+
+    startRecording = () => {
+        this.setState({
+            record: true
+        });
+    };
+
+    stopRecording = () => {
+        this.setState({
+            record: false
+        });
+    };
+
+    onData(recordedBlob) {
+        console.log('chunk of real-time data is: ', recordedBlob);
+    }
+
+    onStop(recordedBlob) {
+        console.log('recordedBlob is: ', recordedBlob);
+        console.log('XXX', recordedBlob.blobURL);
+        var a = document.createElement("a");
+        var url = recordedBlob.blobURL;
+        a.style = "display: none";
+        a.href = url;
+        a.download = 'test.wav';
+        console.log(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
     }
 
 
