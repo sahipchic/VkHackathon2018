@@ -23,6 +23,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import $ from 'jquery';
 import Icon24Back from "@vkontakte/icons/dist/24/back";
 import Icon24Phone from "@vkontakte/icons/dist/24/phone";
+import Icon24Send from "@vkontakte/icons/dist/24/send";
 import Icon16Dropdown from "@vkontakte/icons/dist/16/pin";
 import {testl, testr, bblock, wrap} from './styles.css'
 
@@ -33,8 +34,15 @@ class App extends React.Component {
             activeStory: 'feed',
             activeView: 'view1',
             fetchedUser: null,
-            record: false
-        }
+            record: false,
+            formMessage: "",
+            list: []
+
+        };
+        this.send = this.send.bind(this);
+        this.change = this.change.bind(this);
+        this.getMessages = this.getMessages.bind(this);
+        this.getMessages();
 
     }
 
@@ -45,6 +53,8 @@ class App extends React.Component {
                     this.setState({fetchedUser: e.detail.data});
                     break;
                 default:
+
+                    this.setState({fetchedUser: 5});
                     console.log(e.detail.type);
             }
         });
@@ -81,6 +91,53 @@ class App extends React.Component {
         return this.setState({activeView: 'view3'});
     }
 
+    getMessages() {
+
+        $.ajax({
+            url: 'https://bestproger.ru/hackathon/getMessages.php',
+            type: 'GET',
+            dataType: "json",
+            data: {
+                id: this.state.fetchedUser,
+            }
+        }).done(function (data) {
+            this.setState(
+                {list: data['result']['messages'].reverse()}
+            )
+        }.bind(this));
+    }
+
+    addMessage(message) {
+        $.ajax({
+            url: 'https://bestproger.ru/hackathon/addMessage.php',
+            type: 'GET',
+            dataType: "json",
+            data: {
+                user_id: this.state.fetchedUser,
+                message: message,
+            }
+        }).done(function (data) {
+
+        }.bind(this));
+    }
+
+    send(message) {
+        if (message.trim() === "") {
+            return;
+        }
+        this.addMessage(message);
+        this.getMessages();
+        this.getMessages();
+        this.getMessages();
+    }
+    change(e) {
+        const {
+            name,
+            value
+        } = e.currentTarget;
+        this.setState({formMessage: value})
+    }
+
 
     render() {
         return (
@@ -102,54 +159,27 @@ class App extends React.Component {
                                 </PanelHeaderContent>
                             </PanelHeader>
                             <List>
-                                <Div className="testr">
-                                    <Button level="outline" size="l">Джозеф, что новенького в мире?</Button>
-                                </Div>
-                                <Div className="testl">
-                                    <Button level="commerce" size="l">Да просто лютый пиздец происходит,
-                                        братан!</Button>
-                                </Div>
-                                <Div className="testr">
-                                    <Button level="outline" size="l">Ну ок, а что по погоде?</Button>
-                                </Div>
-                                <Div className="testl">
-                                    <Button level="commerce" size="l">
-                                        <p>
-                                            Погода в Санкт-Петербурге
-                                        </p>
-                                        <p>
-                                            Завтра пасмурно, ветер южный
-                                        </p>
-                                        <p>
-                                            Ночью: ☁️ +2...+3 ℃
-                                        </p>
-                                        <p>
-                                            Утром: ☁️ +3...+4 ℃
-                                        </p>
-                                        <p>
-                                            Днём: ☁️ +5...+6 ℃
-                                        </p>
-                                        <p>
-                                            Вечером: ☁️ +6...+6 ℃
-                                        </p>
-                                        <p>
-                                            Лучше всего обезопаситься и взять зонтик!
-                                        </p>
-                                    </Button>
-                                </Div>
-                                <Div className="testr">
-                                    <Button level="outline" size="l">Спасибо большое, братан!</Button>
-                                </Div>
+                                {this.state.list.map(message => {
+                                    if (message['sender_id'] == '0') {
+                                        return <Div className="testl">
+                                            <Button level="commerce" size="l">{message['message']}</Button>
+                                        </Div>
+                                    } else {
+                                        return <Div className="testr">
+                                            <Button level="outline" size="l">{message['message']}</Button>
+                                        </Div>
+                                    }
+                                })}
                             </List>
 
-                            <div className='wrap'>
+                            <Div className='wrap'>
                                 <Div className="bblock">
-                                    <Input type="text" placeholder="Задайте свой вопрос Джозефу" />
+                                    <Input name='message' value={this.state.formMessage} onChange={this.change} type="text" placeholder="Задайте свой вопрос Джозефу"/>
                                 </Div>
                                 <Div className="bblock">
-                                    <Button level="outline" >?</Button>
+                                    <Button level="outline" onClick={() => this.send(this.state.formMessage)}>{<Icon24Send/>}</Button>
                                 </Div>
-                            </div>
+                            </Div>
                             <Div>
                                 <ReactMic
                                     record={this.state.record}
