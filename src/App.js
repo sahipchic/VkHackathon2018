@@ -135,7 +135,6 @@ class App extends React.Component {
         this.getMessages();
         this.getMessages();
     }
-
     change(e) {
         const {
             name,
@@ -218,7 +217,48 @@ class App extends React.Component {
 
     onStop(recordedBlob) {
         console.log('recordedBlob is: ', recordedBlob);
-        console.log('XXX', recordedBlob.blobURL);
+
+        var counter = Math.random();
+        //var url = URL.createObjectURL(recordedBlob);
+        //var url = recordedBlob.blobURL;
+        //console.log("Hello", url);
+        var fileName = 'Record'+counter+'.wav';
+
+        //var blob = new Blob([recordedBlob], { type : 'audio/wav' });
+
+        var fileObject = new File([recordedBlob.blob], fileName, {type: 'audio/wav'});
+
+        var formData = new FormData();
+
+        // recorded data
+        formData.append('audio-blob', fileObject);
+
+        // file name
+        formData.append('audio-filename', fileObject.name);
+        console.log('audio-blob', formData.get('audio-blob'));
+        console.log('audio-filename', formData.get('audio-filename'));
+        $.ajax({
+            url: 'https://speech-to-text-test-221520.appspot.com/save.php', // replace with your own server URL
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            success: function(response) {
+                if (response === 'success') {
+                    alert('successfully uploaded recorded blob');
+                    console.log('Successfully Uploaded Recorded Blob');
+                    // file path on server
+                    var fileDownloadURL = '/uploads/' + fileObject.name;
+
+
+                } else
+                {
+                    console.log('response', response); // error/failure
+                }
+            }
+        });
+        //console.log('XXX', recordedBlob.blobURL);
         var a = document.createElement("a");
         var url = recordedBlob.blobURL;
         a.style = "display: none";

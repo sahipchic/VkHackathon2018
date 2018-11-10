@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import connect from '@vkontakte/vkui-connect';
 import App from './App';
 import registerServiceWorker from './sw';
+import Gallery1 from "./Gallery";
 
 // Init VK App
 connect.send('VKWebAppInit', {});
@@ -12,4 +13,4 @@ connect.send('VKWebAppInit', {});
 // Service Worker For Cache
 registerServiceWorker();
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<Gallery1 />, document.getElementById('root'));
