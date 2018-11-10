@@ -62,6 +62,10 @@ class App extends React.Component {
         connect.send('VKWebAppGetUserInfo', {});
     }
 
+    componentDidUpdate() {
+        window.scrollBy(0, 9999)
+    }
+
     createCostumer() {
         $.ajax({
             url: 'https://bestproger.ru/vk/api/register.php/',
@@ -160,7 +164,7 @@ class App extends React.Component {
                                     Джозеф
                                 </PanelHeaderContent>
                             </PanelHeader>
-                            <List style={{paddingBottom: 60, color: 'gray', scrollTop: this.state.ttp}}>
+                            <List style={{paddingBottom: 60, color: 'gray', scrollTop: '9999'}}>
                                 {this.state.list.map(message => {
                                     if (message['sender_id'] == '0') {
                                         return <Div className="testl">
@@ -185,20 +189,6 @@ class App extends React.Component {
                                     </Div>
                                 </Div>
                             </FixedLayout>
-                            <Div>
-                                <ReactMic
-                                    record={this.state.record}
-                                    className="sound-wave"
-                                    onStop={this.onStop}
-                                    onData={this.onData}
-                                    width='0'
-                                    height='0'
-                                    strokeColor="#000000"
-                                    backgroundColor="#FF4081"/>
-                                <button onClick={this.startRecording} type="button">Start</button>
-                                <button onClick={this.stopRecording} type="button">Stop</button>
-
-                            </Div>
                         </Panel>
                     </View>
 
