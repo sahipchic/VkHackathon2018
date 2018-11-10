@@ -1,9 +1,11 @@
-.testr{
+.testr {
     text-align: right;
 }
-.testl{
+
+.testl {
     text-align: left;
 }
+
 .bblock {
     display: table-cell;
     font-size: 32px;

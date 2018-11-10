@@ -12,6 +12,7 @@ import {
     View,
     HeaderButton,
     PanelHeaderContent,
+    FixedLayout,
     Avatar,
     List,
     Cell,
@@ -130,6 +131,7 @@ class App extends React.Component {
         this.getMessages();
         this.getMessages();
     }
+
     change(e) {
         const {
             name,
@@ -158,7 +160,7 @@ class App extends React.Component {
                                     Джозеф
                                 </PanelHeaderContent>
                             </PanelHeader>
-                            <List>
+                            <List style={{paddingBottom: 60, color: 'gray', scrollTop: this.state.ttp}}>
                                 {this.state.list.map(message => {
                                     if (message['sender_id'] == '0') {
                                         return <Div className="testl">
@@ -171,15 +173,18 @@ class App extends React.Component {
                                     }
                                 })}
                             </List>
-
-                            <Div className='wrap'>
-                                <Div className="bblock">
-                                    <Input name='message' value={this.state.formMessage} onChange={this.change} type="text" placeholder="Задайте свой вопрос Джозефу"/>
+                            <FixedLayout vertical='bottom'>
+                                <Div className='wrap'>
+                                    <Div className="bblock">
+                                        <Input name='message' value={this.state.formMessage} onChange={this.change}
+                                               type="text" placeholder="Задайте свой вопрос Джозефу"/>
+                                    </Div>
+                                    <Div className="bblock">
+                                        <Button level="outline" onClick={() => this.send(this.state.formMessage)}>{
+                                            <Icon24Send/>}</Button>
+                                    </Div>
                                 </Div>
-                                <Div className="bblock">
-                                    <Button level="outline" onClick={() => this.send(this.state.formMessage)}>{<Icon24Send/>}</Button>
-                                </Div>
-                            </Div>
+                            </FixedLayout>
                             <Div>
                                 <ReactMic
                                     record={this.state.record}
