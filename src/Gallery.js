@@ -1,6 +1,6 @@
 import React from 'react';
 import connect from '@vkontakte/vkui-connect';
-import {ReactMic} from 'react-mic';
+// import {ReactMic} from 'react-mic';
 import {
     Button,
     ConfigProvider,

@@ -17,3 +17,120 @@
 .wrap {
     display: table;
 }
+.block {
+    vertical-align: middle;
+    display: table-cell;
+    text-align: center;
+    font-size: 32px;
+}
+
+.block_right {
+    vertical-align: middle;
+    display: table-cell;
+    text-align: right;
+    align-items: right;
+    align-content: right;
+    alignment: right;
+    align-self: right;
+    text-align-all: right;
+    horiz-align: right;
+    font-size: 32px;
+}
+
+.task_block {
+    vertical-align: middle;
+    display: table-cell;
+    text-align: center;
+    font-size: 32px;
+    max-width: 10%;
+}
+
+.wrap{
+    display: table;
+}
+
+.center {
+    align-items: center;
+    align-content: center;
+    alignment: center;
+    text-align: center;
+    align-self: center;
+    vertical-align: center;
+    text-align-all: center;
+    horiz-align: center;
+    font-size: 32px;
+}
+
+.slide_status {
+    vertical-align: middle;
+    display: table-cell;
+    text-align: center;
+    font-size: 32px;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+#red_circle {
+    margin: 10px;
+    margin-left: 20px;
+    width: 60px;
+    height: 60px;
+    background: red;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+
+}
+
+#green_circle {
+    margin: 10px;
+    margin-left: 20px;
+    width: 60px;
+    height: 60px;
+    background: green;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+}
+
+#orange_circle {
+    margin: 10px;
+    margin-left: 20px;
+    width: 60px;
+    height: 60px;
+    background: orange;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+}
+
+#red_circle_in_slides {
+    margin-left: 960px;
+    width: 70px;
+    height: 70px;
+    background: red;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+
+}
+
+#green_circle_in_slides {
+    margin-left: 960px;
+    width: 70px;
+    height: 70px;
+    background: greenyellow;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+}
+
+#orange_circle_in_slides {
+    margin-left: 960px;
+    width: 70px;
+    height: 70px;
+    background: orange;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+}

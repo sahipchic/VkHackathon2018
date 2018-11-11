@@ -1,6 +1,5 @@
 import React from 'react';
 import connect from '@vkontakte/vkui-connect';
-import {ReactMic} from 'react-mic';
 import {
     Button,
     ConfigProvider,
@@ -17,15 +16,25 @@ import {
     List,
     Cell,
     Footer,
-    Input
+    Input,
+    ListItem
 } from '@vkontakte/vkui';
+import Icon24Game from '@vkontakte/icons/dist/24/game';
+import Icon24Back from '@vkontakte/icons/dist/24/back';
+import Icon24Users from '@vkontakte/icons/dist/24/users';
+import Icon24Settings from '@vkontakte/icons/dist/24/settings';
+import Icon24Info from '@vkontakte/icons/dist/24/info';
+import Icon24Done from '@vkontakte/icons/dist/24/done';
+import Icon16Dropdown from '@vkontakte/icons/dist/16/dropdown';
 import {isWebView} from '@vkontakte/vkui/src/lib/webview';
 import '@vkontakte/vkui/dist/vkui.css';
+// noinspection ES6CheckImport
+import Account from './Account';
+// import EpicClass from './Epic';
+//import AvailableTasks from './AvailableTasks';
 import $ from 'jquery';
-import Icon24Back from "@vkontakte/icons/dist/24/back";
 import Icon24Phone from "@vkontakte/icons/dist/24/phone";
 import Icon24Send from "@vkontakte/icons/dist/24/send";
-import Icon16Dropdown from "@vkontakte/icons/dist/16/pin";
 import {testl, testr, bblock, wrap} from './styles.css'
 
 class App extends React.Component {
@@ -135,6 +144,7 @@ class App extends React.Component {
         this.getMessages();
         this.getMessages();
     }
+
     change(e) {
         const {
             name,
@@ -190,7 +200,7 @@ class App extends React.Component {
                             </FixedLayout>
                         </Panel>
                     </View>
-
+                    <Account id = 'account_view'/>
 
                 </Root>
             </ConfigProvider>
@@ -219,9 +229,6 @@ class App extends React.Component {
         console.log('recordedBlob is: ', recordedBlob);
 
         var counter = Math.random();
-        //var url = URL.createObjectURL(recordedBlob);
-        //var url = recordedBlob.blobURL;
-        //console.log("Hello", url);
         var fileName = 'Record'+counter+'.wav';
 
         //var blob = new Blob([recordedBlob], { type : 'audio/wav' });
